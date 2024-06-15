@@ -47,9 +47,9 @@ static void recv_task(void *arg)
     }
 }
 
-static void send_task(void *arg)
+void send_task(void *arg)
 {
-    uint8_t buffer[256] = {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08};
+    uint8_t buffer[256] = {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0a};
     bus_serial_driver_t* serial = (bus_serial_driver_t*)arg;
     while (1) {   
         bus_write((bus_driver_t**)serial,buffer,10);
@@ -75,8 +75,15 @@ void app_main(void)
     bus_serial_driver_t* serial = bus_serial_driver_register("ttyEsp", 1);
     bus_init((bus_driver_t**)serial);
 
-    xTaskCreatePinnedToCore(usart_recv_task, "usart_recv_task", 1024, serial, 3, NULL, tskNO_AFFINITY);
-    xTaskCreatePinnedToCore(usart_send_task, "usart_send_task", 1024, serial, 3, NULL, tskNO_AFFINITY);
-    xTaskCreatePinnedToCore(recv_task, "recv_task", 1024, serial, 3, NULL, tskNO_AFFINITY);
-    xTaskCreatePinnedToCore(send_task, "send_task", 1024, serial, 3, NULL, tskNO_AFFINITY);
+    xTaskCreatePinnedToCore(usart_recv_task, "usart_recv_task", 4096, serial, 3, NULL, tskNO_AFFINITY);
+    xTaskCreatePinnedToCore(usart_send_task, "usart_send_task", 4096, serial, 3, NULL, tskNO_AFFINITY);
+    xTaskCreatePinnedToCore(recv_task, "recv_task", 4096, serial, 3, NULL, tskNO_AFFINITY);
+    xTaskCreatePinnedToCore(send_task, "send_task", 4096, serial, 3, NULL, tskNO_AFFINITY);
+
+    while(1)
+    {
+        uint8_t buffer[256] = {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0a};
+        // bus_write((bus_driver_t**)serial,buffer,10);
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
 }

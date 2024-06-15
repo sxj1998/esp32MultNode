@@ -78,7 +78,7 @@ static int serial_close(void *self)
 static int serial_write(void *self, uint8_t *data, uint16_t length)
 {
     int ret = 0;
-    // bus_serial_driver_t* dev = self;
+    bus_serial_driver_t* dev = self;
     // int fd = dev->bus_device.fd;
     // ret = write(fd, data, length);
     ret = uart_write_bytes(UART_NUM_1, data, length);
@@ -88,10 +88,11 @@ static int serial_write(void *self, uint8_t *data, uint16_t length)
 static int serial_read(void *self, uint8_t *data, uint16_t length)
 {
     int ret = 0;
-    // bus_serial_driver_t* dev = self;
+    bus_serial_driver_t* dev = self;
     // int fd = dev->bus_device.fd;
     // ret = read(fd, data, length);
     ret = uart_read_bytes(UART_NUM_1, data, length, 1000);
+    printf("read %d bytes----------------------------", ret);
 
     return ret;
 }
