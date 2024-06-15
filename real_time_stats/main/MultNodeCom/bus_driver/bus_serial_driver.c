@@ -14,7 +14,27 @@
 #include <termios.h>
 #include <string.h>
 
+#include "esp_system.h"
+#include "esp_log.h"
+#include "driver/uart.h"
+#include "string.h"
+#include "driver/gpio.h"
+
 MODULE_TAG("SERICL"); 
+
+#define TXD_PIN (GPIO_NUM_4)
+#define RXD_PIN (GPIO_NUM_5)
+
+static int serial_init(void *self);
+static int serial_open(void *self);
+static int serial_close(void *self);
+static int serial_write(void *self, uint8_t *buffer, uint16_t length);
+static int serial_read(void *self, uint8_t *buffer, uint16_t length);
+static int serial_write_buff(void *self, uint8_t *buffer, uint16_t length);
+static int serial_read_buff(void *self, uint8_t *buffer, uint16_t length);
+static int rb_serial_write_sync(void *self);
+static int rb_serial_read_sync(void *self);
+static int rb_serial_read_sync(void *self);
 
 static const bus_interface_i bus_serial_interface = {
     .init = serial_init,
@@ -26,87 +46,22 @@ static const bus_interface_i bus_serial_interface = {
     .sync_tx = rb_serial_write_sync
 };
 
-/* 115200, 8, N, 1 */
-static int uart_setup(int fd)
-{
-    struct termios options;
-
-    // 获取原有串口配置
-    if  (tcgetattr(fd, &options) < 0) {
-        return -1;
-    }
-
-    // 修改控制模式，保证程序不会占用串口
-    options.c_cflag  |=  CLOCAL;
-
-    // 修改控制模式，能够从串口读取数据
-    options.c_cflag  |=  CREAD;
-
-    // 不使用流控制
-    options.c_cflag &= ~CRTSCTS;
-
-    // 设置数据位
-    options.c_cflag &= ~CSIZE;
-    options.c_cflag |= CS8;
-
-    // 设置奇偶校验位
-    options.c_cflag &= ~PARENB;
-    options.c_iflag &= ~INPCK; 
-
-    // 设置停止位
-    options.c_cflag &= ~CSTOPB;
-
-    // 设置最少字符和等待时间
-    options.c_cc[VMIN] = 1;     // 读数据的最小字节数
-    options.c_cc[VTIME]  = 0;   //等待第1个数据，单位是10s
-    
-    // 修改输出模式，原始数据输出
-    options.c_cflag |= CLOCAL | CREAD;
-    options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
-    options.c_oflag &= ~OPOST;
-    options.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
-
-    // 设置波特率
-    cfsetispeed(&options, B115200); 
-    cfsetospeed(&options, B115200);
-
-    // 清空终端未完成的数据
-    tcflush(fd, TCIFLUSH);
-
-    // 设置新属性
-    if(tcsetattr(fd, TCSANOW, &options) < 0) {
-        return -1;
-    }
-
-    return 0;
-}
-
 static int serial_init(void *self)
 {
-    bus_serial_driver_t* dev = self;
-    int* fd = &(dev->bus_device.fd);
-    int ret = 0;
+    const uart_config_t uart_config = {
+        .baud_rate = 115200,
+        .data_bits = UART_DATA_8_BITS,
+        .parity = UART_PARITY_DISABLE,
+        .stop_bits = UART_STOP_BITS_1,
+        .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
+        .source_clk = UART_SCLK_DEFAULT,
+    };
+    // We won't use a buffer for sending data.
+    uart_driver_install(UART_NUM_1, 256 * 2, 0, 0, NULL, 0);
+    uart_param_config(UART_NUM_1, &uart_config);
+    uart_set_pin(UART_NUM_1, TXD_PIN, RXD_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
 
-    TI_DEBUG("serial init DEV_NAME %s ",dev->dev_name);
-        /* 打开串口 */
-    *fd = open(dev->dev_name, O_RDWR | O_NOCTTY | O_NDELAY);
-    if (*fd < 0) {
-        TI_DEBUG("open dev fail! ");
-        ret = -1;
-    } else {
-        TI_DEBUG("DEV %s fd:%d ", dev->dev_name, *fd);
-        fcntl(*fd, F_SETFL, 0);
-    }
-
-    /* 设置串口 */
-    ret = uart_setup(*fd);
-    if (ret < 0) {
-        TI_DEBUG("uart setup fail! ");
-        close(*fd);
-        ret = -1;
-    }
-
-    return ret;
+    return 0;
 }
 
 static int serial_open(void *self)
@@ -123,19 +78,20 @@ static int serial_close(void *self)
 static int serial_write(void *self, uint8_t *data, uint16_t length)
 {
     int ret = 0;
-    bus_serial_driver_t* dev = self;
-    int fd = dev->bus_device.fd;
-    ret = write(fd, data, length);
-
+    // bus_serial_driver_t* dev = self;
+    // int fd = dev->bus_device.fd;
+    // ret = write(fd, data, length);
+    ret = uart_write_bytes(UART_NUM_1, data, length);
     return ret;
 }
 
 static int serial_read(void *self, uint8_t *data, uint16_t length)
 {
     int ret = 0;
-    bus_serial_driver_t* dev = self;
-    int fd = dev->bus_device.fd;
-    ret = read(fd, data, length);
+    // bus_serial_driver_t* dev = self;
+    // int fd = dev->bus_device.fd;
+    // ret = read(fd, data, length);
+    ret = uart_read_bytes(UART_NUM_1, data, length, 1000);
 
     return ret;
 }

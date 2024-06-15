@@ -93,5 +93,6 @@ int route_table_add(route_ctrl_t* route_ctrl, BUS_ID_TYPE bus_id, BOARD_ID_TYPE 
     route_ctrl->route_table[route_ctrl->route_index][ROUTE_BOARD] = board_id;
     TI_DEBUG(" route table add index: %d , bus_id %02x, board_id %02x", route_ctrl->route_index, route_ctrl->route_table[route_ctrl->route_index][ROUTE_BUS], route_ctrl->route_table[route_ctrl->route_index][ROUTE_BOARD]);
     route_ctrl->route_index++;
+    return 0;
 }
 

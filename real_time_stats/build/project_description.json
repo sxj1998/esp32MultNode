@@ -1,7 +1,7 @@
 {
     "version":            "1",
     "project_name":       "real_time_stats",
-    "project_version":    "1",
+    "project_version":    "19c523f-dirty",
     "project_path":       "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats",
     "idf_path":           "/home/shexingju/esp/esp-idf",
     "build_dir":          "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/build",
@@ -790,8 +790,8 @@
             "managed_reqs": [],
             "managed_priv_reqs": [],
             "file": "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/build/esp-idf/main/libmain.a",
-            "sources": [ "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/real_time_stats_example_main.c", "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/station_wifi.c" ],
-            "include_dirs": [ "." ]
+            "sources": [ "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/real_time_stats_example_main.c", "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/station_wifi.c", "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/MultNodeCom/utils/crc16.c", "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/MultNodeCom/utils/getTimeStamp.c", "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/MultNodeCom/utils/utilsAssert.c", "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/MultNodeCom/utils/utilsPrintf.c", "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/MultNodeCom/bus_driver/bus_serial_driver.c", "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/MultNodeCom/bus_core/bus_driver.c", "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/MultNodeCom/bus_core/route_handle.c", "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/MultNodeCom/bus_core/route_interface.c", "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/MultNodeCom/bus_core/route_protocol.c", "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/MultNodeCom/3rd_part/ringbuffer.c", "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/main/MultNodeCom/bus_device/bus_serial_device.c" ],
+            "include_dirs": [ ".", "MultNodeCom/bus_device", "MultNodeCom/utils", "MultNodeCom/bus_driver", "MultNodeCom/bus_core", "MultNodeCom/3rd_part" ]
         },
         "mbedtls": {
             "alias": "idf::mbedtls",

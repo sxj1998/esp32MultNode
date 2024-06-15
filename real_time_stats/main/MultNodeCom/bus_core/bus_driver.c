@@ -45,8 +45,8 @@ int8_t bus_driver_register(bus_driver_t **bus_driver, const bus_interface_i* int
     TI_DEBUG("Bus driver %s with type %d and id %d ", bus->bus_name, bus_type, bus_id);
     return 0;
 
-free_ringbuffer_rx:
-    rt_ringbuffer_destroy(bus->serial_read_rb);
+// free_ringbuffer_rx:
+//     rt_ringbuffer_destroy(bus->serial_read_rb);
 
 free_ringbuffer_tx:
     rt_ringbuffer_destroy(bus->serial_write_rb);

@@ -65,7 +65,7 @@ static int route_data_send(void* self, uint8_t src_id, uint8_t dst_id, uint8_t c
 static int route_item_bind(void* self, bus_driver_t **bus)
 {
     utils_assert(bus);
-    bus_interface_i* interface = (bus_interface_i*)(*bus)->interface;
+    // bus_interface_i* interface = (bus_interface_i*)(*bus)->interface;
     route_item_t* route_item = (route_item_t*)self;
     route_item->bus = bus;
     route_item->route_id = (*bus)->bus_id;
