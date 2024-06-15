@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/build/CMakeFiles/bootloader
+/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/build/CMakeFiles/bootloader.rule
+/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/build/CMakeFiles/bootloader-complete.rule
+/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
+/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
