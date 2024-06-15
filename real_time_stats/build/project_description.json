@@ -1,7 +1,7 @@
 {
     "version":            "1",
     "project_name":       "real_time_stats",
-    "project_version":    "19c523f-dirty",
+    "project_version":    "69f11e6-dirty",
     "project_path":       "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats",
     "idf_path":           "/home/shexingju/esp/esp-idf",
     "build_dir":          "/home/shexingju/CODE/esp32/esp32c3/esp32c3test/test1/freeRtos/real_time_stats/build",
