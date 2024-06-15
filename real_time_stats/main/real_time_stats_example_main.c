@@ -52,7 +52,7 @@ void send_task(void *arg)
     uint8_t buffer[256] = {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0a};
     bus_serial_driver_t* serial = (bus_serial_driver_t*)arg;
     while (1) {   
-        bus_write((bus_driver_t**)serial,buffer,10);
+        bus_write((bus_driver_t**)serial,buffer,100);
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
